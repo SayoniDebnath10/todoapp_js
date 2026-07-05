@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>To Do List</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">To Do List</div>
+      <div class="task">
+        <input type="text" placeholder="Add A New Task" id="task" />
+        <button id="add" onclick="addTask()">ADD</button>
+        <button id="show" onclick="showTask()">SHOW LIST</button>
+      </div>
+      <div class="tasklist hidden">
+        <ol type="1" class="list"></ol>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
