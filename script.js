@@ -9,7 +9,7 @@ function addTask(){
         const list=document.querySelector(".list");
         const tasklist=list.children;    
         for(let task of tasklist){
-         if(value===task.secondElementChild.textContent){
+         if (value === task.children[1].textContent) {
             alert("This task exists!");
             document.getElementById("task").value="";
         document.getElementById("task").focus();
