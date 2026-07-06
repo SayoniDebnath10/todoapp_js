@@ -1,4 +1,4 @@
-# To-Do App (Vanilla JavaScript)
+# To-Do App (DOM Based)
 
 A simple and interactive To-Do application built using HTML, CSS, and JavaScript.
 *Current Version:* v1.0
