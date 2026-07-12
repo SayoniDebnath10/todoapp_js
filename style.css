@@ -150,9 +150,13 @@ border: 2px solid black;
 .checkclass {
     margin-right: 10px;
 }
-.check{
+.check {
     text-decoration: line-through;
 }
-.check .updatebtn,.check .deletebtn{
+.checkbox .updatebtn{
     display:none;
+}
+.spancheck{
+
+text-decoration: line-through;
 }

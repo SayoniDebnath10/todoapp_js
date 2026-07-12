@@ -1,3 +1,5 @@
+loadTask();
+
 function addTask(){
     const value=document.getElementById("task").value.trim();
       if(!value){
@@ -31,27 +33,35 @@ function addTask(){
     newtask.append(span);
     newtask.append(div);
     list.append(newtask);
+
+    saveTask();
+
     document.getElementById("task").value=""; 
     document.getElementById("task") .focus();
     const deletebutton=deleteTask(newtask,div) ;
-    updateTask(newtask, span,deletebutton,div);
+    updateTask(newtask, checkbox,span,deletebutton,div);
     }
 }
 
 function checkboxcheck(event){
-  if(event.target.checked){
     const parent=event.target.parentElement;
-    parent.classList.add("check");
+    const span = parent.querySelector("span");
+    const updateBtn = parent.querySelector(".updatebtn");
+  if(event.target.checked){
+     span.style.textDecoration = "line-through";
+        updateBtn.style.display = "none";
+    
     document.getElementById("task").focus();
 
 
 
   }else{
-    const parent=event.target.parentElement;
-    parent.classList.remove("check");
+   span.style.textDecoration = "none";
+updateBtn.style.display = "block";
     document.getElementById("task").focus();
     
   }
+  saveTask();
 
 }
    
@@ -64,6 +74,7 @@ function deleteTask(newtask,div){
         let confirmation=confirm("Are you sure you wan't to delete this task?");
         if(confirmation){
             newtask.remove();
+            saveTask();
 
         }
          
@@ -71,11 +82,15 @@ function deleteTask(newtask,div){
     return deletebutton;
 
 }
-function updateTask(newtask ,span,deletebutton,div){
+function updateTask(newtask,checkbox ,span,deletebutton,div){
     const updatebutton=document.createElement('button');
     updatebutton.className="updatebtn";
     updatebutton.textContent="UPDATE";
+
     div.appendChild(updatebutton);
+    if(checkbox.checked){
+        updatebutton.style.display="none";
+    }
     updatebutton.addEventListener("click",function(){
         let temp=span.textContent;
         span.style.display = "none";
@@ -91,11 +106,30 @@ function updateTask(newtask ,span,deletebutton,div){
         newtask.append(inputbox);
         newtask.append(save);
         save.addEventListener("click",function(){
-            span.textContent=inputbox.value;
+            let updatedvalue=inputbox.value.trim();
+            if(updatedvalue==""){
+                alert("Task cannot be empty!");
+                inputbox.focus();
+                return;
+            }
+
+const tasks = document.querySelectorAll(".newtask span");
+
+    for(let task of tasks){
+
+        if(task !== span && task.textContent === updatedvalue){
+            alert("Task already exists!");
+            inputbox.focus();
+            return;
+        }
+
+    }
+            span.textContent=updatedvalue;
             inputbox.remove();
             save.remove();
             span.style.display = "";  
-            div.style.display="";     
+            div.style.display=""; 
+            saveTask();    
 
     });
 
@@ -118,3 +152,60 @@ function showTask(){
 
 }
 
+
+
+function saveTask(){
+    const list=document.querySelector(".list");
+        const tasklist=list.children;    
+    const tasks=[];
+        for(let task of tasklist){
+            const taskdata={};
+            taskdata["task_name"]=(task.children[1].textContent);
+            taskdata["task_status"]=(task.children[0].checked);
+            tasks.push(taskdata);
+            console.log(tasks);
+            
+
+}
+localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTask(){
+
+    const data=localStorage.getItem("tasks");
+    if(!data){
+        return;
+    }
+    const tasks=JSON.parse(data);
+    console.log(tasks);
+     const list=document.querySelector(".list");
+    for(let task of tasks){
+              const newtask=document.createElement("li");
+    newtask.className="newtask";    
+    const span=document.createElement("span");
+    span.className="spancheck";
+    const checkbox=document.createElement("input");
+    checkbox.type="checkbox";
+    checkbox.className="checkclass";
+    checkbox.checked = task["task_status"];
+    checkbox.addEventListener("change",checkboxcheck);
+    
+    if(checkbox.checked){
+    span.classList.add("spancheck");
+    
+
+}else{
+    span.style.textDecoration="none";
+}
+    const div=document.createElement("div");
+    div.className="div";
+    span.textContent=task["task_name"];
+    newtask.append(checkbox);
+    newtask.append(span);
+    newtask.append(div);
+    list.append(newtask);    
+    const deletebutton=deleteTask(newtask,div) ;
+    updateTask(newtask,checkbox, span,deletebutton,div);
+
+    }
+}
