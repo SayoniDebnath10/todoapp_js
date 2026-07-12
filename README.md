@@ -3,6 +3,9 @@
 A simple and interactive To-Do application built using HTML, CSS, and JavaScript.
 *Current Version:* v1.0
 
+## Live Demo
+todoapp-js-umber.vercel.app
+
 ## Features
 - Create/Add tasks
 - Read/View tasks
@@ -12,7 +15,8 @@ A simple and interactive To-Do application built using HTML, CSS, and JavaScript
 - Prevents Empty Task Submission
 - Prevents Duplicate Task Submission
 - Delete Confirmation
-- Clean and responsive UI (coming soon)
+- Local Storage
+- Array of Objects Refractor
   
 ## Tech Stack
 - HTML5
@@ -21,15 +25,6 @@ A simple and interactive To-Do application built using HTML, CSS, and JavaScript
  
 ## Upcoming Features
 - Responsive Design
-- Local Storage
-- Array of Objects Refactor
-- Search Tasks
-- Filter Completed Tasks
-- Dark Mode
-
-## Live Demo
-todoapp-js-umber.vercel.app
-
 
 ## Author
 *Sayoni Debnath*
